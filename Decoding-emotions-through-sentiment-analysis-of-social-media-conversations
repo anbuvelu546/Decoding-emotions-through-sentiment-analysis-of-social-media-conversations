@@ -1,0 +1,34 @@
+# Install required packages
+# pip install transformers torch pandas
+
+from transformers import pipeline
+import pandas as pd
+
+# Load pre-trained sentiment analysis pipeline
+sentiment_pipeline = pipeline("sentiment-analysis")
+
+# Sample social media conversations (e.g., from Twitter or Reddit)
+posts = [
+    "I just got promoted at work! Feeling amazing today!",
+    "I'm so tired of everything. Nothing ever goes right.",
+    "This new phone is absolutely fantastic, love it!",
+    "Why is everyone so annoying these days?",
+    "Can't stop crying. Today is the worst day of my life.",
+    "Just had the best vacation ever. So relaxed and happy."
+]
+
+# Analyze each post
+results = sentiment_pipeline(posts)
+
+# Combine results in a DataFrame for display
+output_df = pd.DataFrame({
+    "Post": posts,
+    "Label": [res['label'] for res in results],
+    "Score": [res['score'] for res in results]
+})
+
+# Display the results
+print(output_df)
+
+# Save to CSV if needed
+# output_df.to_csv("sentiment_analysis_results.csv", index=False)
